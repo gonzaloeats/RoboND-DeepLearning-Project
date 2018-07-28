@@ -12,13 +12,19 @@ Here I have the different cameras capturing shots of the crowds: I could have be
 - This project uses a fully-convolutional network where every layer is convolutional itself. This allows us to not just detect features in an image but with semantic segmentation, we are able to label each pixel and know the position of the feature in question.
 
 #### Encoder 
-- The encoder section has regular convolutions, but instead of a final fully connected layer, we have a 1x1 convolution layer and a decoder section made of reversed convolution layers.
+- The encoder section is composed of individual blocks of convolutional layers. The main advantage is a reduction of the spatial dimension. Downsampling allows a more efficient way for the model to generalize the image, separating them into different block reduces the potential for overfitting and allows parameters to work more efficiently.
+
+#### Batch normalization
+- Batch normalization reduces the amount the hidden unit values shifts around allowing the model to be more robust to general variation. This will be very useful for example in correcting for light conditions where the general color maybe scaled. 
+
+#### 1x1 Convolutional layer
+- The 1x1 layer has a kernel and stride of 1 thus is able to retain spatial information from the encoder. This allows the model to classify each pixle.
 
 ![FCN](images/FCN.png)
 
 
 #### Decoder
-The decoder part of the model can either be composed of transposed convolution layers or bilinear upsampling layers.
+The decoder part of the model can either be composed of transposed convolution layers or bilinear upsampling layers. Each layer basically joins the layer before it to reconstruct the image to it's original size
 
 
 
